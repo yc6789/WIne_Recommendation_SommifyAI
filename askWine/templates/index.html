@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>askWine</title>
+    <!-- Import the Sommify script -->
+    <script src="https://elements.sommify.ai/js/v1"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+        }
+        h1, h2 {
+            margin-bottom: 20px;
+        }
+        form {
+            margin-bottom: 30px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        input[type="text"],
+        input[type="number"],
+        textarea {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        input[type="checkbox"] {
+            margin-right: 5px;
+        }
+        input[type="submit"] {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        input[type="submit"]:hover {
+            background-color: #45a049;
+        }
+        .filter-options {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome to askWine</h1>
+
+    <h2>Recommendation by URL</h2>
+    <form action="/recommend" method="post">
+        <label for="recipe_url">Recipe URL:</label>
+        <input type="text" id="recipe_url" name="recipe_url" required><br>
+
+        <h3 onclick="toggleFilters('filterOptionsURL')">Filter Options</h3>
+        <div class="filter-options" id="filterOptionsURL">
+            <label for="tags">Tags:</label><br>
+    <input type="text" id="tags" name="tags"><br><br>
+
+    <label for="streamline">Streamline:</label>
+    <input type="checkbox" id="streamline" name="streamline"><br><br>
+
+    <label for="green">Green:</label>
+    <input type="checkbox" id="green" name="green"><br><br>
+
+    <label for="limit">Limit:</label>
+    <input type="number" id="limit" name="limit" min="1"><br><br>
+
+    <label for="min_price">Minimum Price:</label>
+    <input type="number" id="min_price" name="min_price" step="0.01"><br><br>
+
+    <label for="max_price">Maximum Price:</label>
+    <input type="number" id="max_price" name="max_price" step="0.01"><br><br>
+
+    <label for="preferences">Preferences:</label><br>
+    <input type="text" id="preferences" name="preferences"><br><br>
+
+    <label for="dislikes">Dislikes:</label><br>
+    <input type="text" id="dislikes" name="dislikes"><br><br>
+
+    <label for="origin_country">Origin Country:</label>
+    <input type="text" id="origin_country" name="origin_country"><br><br>
+
+    <label for="origin_region">Origin Region:</label>
+    <input type="text" id="origin_region" name="origin_region"><br><br>
+
+    <label for="origin_subregion">Origin Subregion:</label>
+    <input type="text" id="origin_subregion" name="origin_subregion"><br><br>
+
+    <label for="grapes">Grapes:</label><br>
+    <input type="text" id="grapes" name="grapes"><br><br>
+
+    <label for="vintage">Vintage:</label><br>
+    <input type="text" id="vintage" name="vintage"><br><br>
+
+    <label for="min_alcohol_level">Minimum Alcohol Level:</label>
+    <input type="number" id="min_alcohol_level" name="min_alcohol_level" min="0" max="100" step="0.1"><br><br>
+
+    <label for="max_alcohol_level">Maximum Alcohol Level:</label>
+    <input type="number" id="max_alcohol_level" name="max_alcohol_level" min="0" max="100" step="0.1"><br><br>
+
+        </div>
+
+        <input type="submit" value="Get Recommendations">
+    </form>
+
+    <h2>Recommendation by Title, Ingredients, and Steps</h2>
+    <form action="/recommend" method="post">
+        <label for="recipe_title">Recipe Title:</label>
+        <input type="text" id="recipe_title" name="recipe_title" required><br>
+
+        <label for="recipe_ingredients">Ingredients:</label><br>
+        <textarea id="recipe_ingredients" name="recipe_ingredients" rows="4" cols="50"></textarea><br>
+
+        <label for="recipe_steps">Steps:</label><br>
+        <textarea id="recipe_steps" name="recipe_steps" rows="4" cols="50"></textarea><br>
+
+        <h3 onclick="toggleFilters('filterOptionsTitle')">Filter Options</h3>
+        <div class="filter-options" id="filterOptionsTitle">
+            <label for="tags">Tags:</label><br>
+    <input type="text" id="tags" name="tags"><br><br>
+
+    <label for="streamline">Streamline:</label>
+    <input type="checkbox" id="streamline" name="streamline"><br><br>
+
+    <label for="green">Green:</label>
+    <input type="checkbox" id="green" name="green"><br><br>
+
+    <label for="limit">Limit:</label>
+    <input type="number" id="limit" name="limit" min="1"><br><br>
+
+    <label for="min_price">Minimum Price:</label>
+    <input type="number" id="min_price" name="min_price" step="0.01"><br><br>
+
+    <label for="max_price">Maximum Price:</label>
+    <input type="number" id="max_price" name="max_price" step="0.01"><br><br>
+
+    <label for="preferences">Preferences:</label><br>
+    <input type="text" id="preferences" name="preferences"><br><br>
+
+    <label for="dislikes">Dislikes:</label><br>
+    <input type="text" id="dislikes" name="dislikes"><br><br>
+
+    <label for="origin_country">Origin Country:</label>
+    <input type="text" id="origin_country" name="origin_country"><br><br>
+
+    <label for="origin_region">Origin Region:</label>
+    <input type="text" id="origin_region" name="origin_region"><br><br>
+
+    <label for="origin_subregion">Origin Subregion:</label>
+    <input type="text" id="origin_subregion" name="origin_subregion"><br><br>
+
+    <label for="grapes">Grapes:</label><br>
+    <input type="text" id="grapes" name="grapes"><br><br>
+
+    <label for="vintage">Vintage:</label><br>
+    <input type="text" id="vintage" name="vintage"><br><br>
+
+    <label for="min_alcohol_level">Minimum Alcohol Level:</label>
+    <input type="number" id="min_alcohol_level" name="min_alcohol_level" min="0" max="100" step="0.1"><br><br>
+
+    <label for="max_alcohol_level">Maximum Alcohol Level:</label>
+    <input type="number" id="max_alcohol_level" name="max_alcohol_level" min="0" max="100" step="0.1"><br><br>
+
+        </div>
+
+        <input type="submit" value="Get Recommendations">
+    </form>
+
+
+    <h2>Recommendation by Recipe Title (Edamam)</h2>
+    <form action="/recommend" method="post">
+        <label for="recipe_title_edamam">Recipe Title:</label>
+        <input type="text" id="recipe_title_edamam" name="recipe_title_edamam" required><br>
+
+        <h3 onclick="toggleFilters('filterOptionsTitleEdamam')">Filter Options</h3>
+        <div class="filter-options" id="filterOptionsTitleEdamam">
+            <label for="tags">Tags:</label><br>
+    <input type="text" id="tags" name="tags"><br><br>
+
+    <label for="streamline">Streamline:</label>
+    <input type="checkbox" id="streamline" name="streamline"><br><br>
+
+    <label for="green">Green:</label>
+    <input type="checkbox" id="green" name="green"><br><br>
+
+    <label for="limit">Limit:</label>
+    <input type="number" id="limit" name="limit" min="1"><br><br>
+
+    <label for="min_price">Minimum Price:</label>
+    <input type="number" id="min_price" name="min_price" step="0.01"><br><br>
+
+    <label for="max_price">Maximum Price:</label>
+    <input type="number" id="max_price" name="max_price" step="0.01"><br><br>
+
+    <label for="preferences">Preferences:</label><br>
+    <input type="text" id="preferences" name="preferences"><br><br>
+
+    <label for="dislikes">Dislikes:</label><br>
+    <input type="text" id="dislikes" name="dislikes"><br><br>
+
+    <label for="origin_country">Origin Country:</label>
+    <input type="text" id="origin_country" name="origin_country"><br><br>
+
+    <label for="origin_region">Origin Region:</label>
+    <input type="text" id="origin_region" name="origin_region"><br><br>
+
+    <label for="origin_subregion">Origin Subregion:</label>
+    <input type="text" id="origin_subregion" name="origin_subregion"><br><br>
+
+    <label for="grapes">Grapes:</label><br>
+    <input type="text" id="grapes" name="grapes"><br><br>
+
+    <label for="vintage">Vintage:</label><br>
+    <input type="text" id="vintage" name="vintage"><br><br>
+
+    <label for="min_alcohol_level">Minimum Alcohol Level:</label>
+    <input type="number" id="min_alcohol_level" name="min_alcohol_level" min="0" max="100" step="0.1"><br><br>
+
+    <label for="max_alcohol_level">Maximum Alcohol Level:</label>
+    <input type="number" id="max_alcohol_level" name="max_alcohol_level" min="0" max="100" step="0.1"><br><br>
+        </div>
+
+        <input type="submit" value="Get Recommendations">
+    </form>
+
+    <script>
+        function toggleFilters(divId) {
+            var filterOptions = document.getElementById(divId);
+            if (filterOptions.style.display === "none") {
+                filterOptions.style.display = "block";
+            } else {
+                filterOptions.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
