@@ -6,10 +6,10 @@ app = Flask(__name__)
 # Define your API URL and API key
 API_URL = "https://api.sommify.ai/sommelier/v1/url/list"
 API_RECIPE = "https://api.sommify.ai/sommelier/v1/recipe/list"
-API_KEY = "somm-344b50f9-4acf-46b1-9953-53d60fa51f0e"
+API_KEY = "YOUR_SOMMIFYAI_API_KEY"
 EDAMAM_API = "https://api.edamam.com/api/recipes/v2"
-EDAMAM_APP_ID = "47d02ee3"
-EDAMAM_APP_KEY = "df4e156cdbafe77db65d4ecc6ef1c71f"
+EDAMAM_APP_ID = "YOUR_EDAMAM_APP_ID"
+EDAMAM_APP_KEY = "YOUR_EDAMAM_APP_KEY"
 
 
 @app.route("/")
@@ -51,15 +51,15 @@ def recommend():
             "max": max_price,
             "currency": "EUR"
         },
-        # "preferences": preferences,
-        # "dislikes": dislikes,
-        # "origin": {
-        # "country": origin_country,
-        # "region": origin_region,
-        # "subregion": origin_subregion
-        # },
-        # "grapes": grapes,
-        # "vintage": vintage,
+         "preferences": preferences,
+         "dislikes": dislikes,
+         "origin": {
+         "country": origin_country,
+         "region": origin_region,
+         "subregion": origin_subregion
+         },
+         "grapes": grapes,
+         "vintage": vintage,
         "minAlcoholLevel": min_alcohol_level,
         "maxAlcoholLevel": max_alcohol_level
     }
