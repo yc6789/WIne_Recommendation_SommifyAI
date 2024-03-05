@@ -53,11 +53,7 @@ def recommend():
         },
          "preferences": preferences,
          "dislikes": dislikes,
-         "origin": {
-         "country": origin_country,
-         "region": origin_region,
-         "subregion": origin_subregion
-         },
+         "origin": [origin_country,origin_region,origin_subregion],
          "grapes": grapes,
          "vintage": vintage,
         "minAlcoholLevel": min_alcohol_level,
