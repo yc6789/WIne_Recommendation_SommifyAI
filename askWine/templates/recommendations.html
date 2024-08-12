@@ -4,21 +4,65 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wine Recommendations</title>
+    <style>
+        img {
+            max-width: 100px; /* Small thumbnail image */
+            height: auto;
+        }
+        li {
+            list-style-type: none; /* Removes bullet points from list items */
+            margin-bottom: 20px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
 </head>
 <body>
     <h1>Wine Recommendations</h1>
-    <ul>
-        {% for wine in recommendations %}
-        <li>
-            <img src="{{ wine.imgThumbnailUrl }}" alt="{{ wine.title }}">
-            <h3>{{ wine.title }}</h3>
-            <p>{{ wine.description }}</p>
-            <p>Price: {{ wine.price }} {{ wine.currency }}</p>
-            <p>Alcohol: {{ wine.alcohol }}%</p>
-            <p>Country: {{ wine.country }}</p>
-            <a href="{{ wine.url }}" target="_blank">More Info</a>
-        </li>
-        {% endfor %}
-    </ul>
+    <div id="recommendationsContainer"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchRecommendations();
+        });
+
+        function fetchRecommendations() {
+            fetch('/recommendations', {
+                method: 'GET', // Assuming your endpoint also supports GET for fetching stored recommendations
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                displayRecommendations(data);
+            })
+            .catch(error => console.error('Error:', error));
+        }
+
+        function displayRecommendations(recommendations) {
+            const container = document.getElementById('recommendationsContainer');
+            if (recommendations.length > 0) {
+                const list = document.createElement('ul');
+                recommendations.forEach(wine => {
+                    const item = document.createElement('li');
+                    item.innerHTML = `
+                        <img src="${wine.imgThumbnailUrl}" alt="${wine.title}">
+                        <h3>${wine.title}</h3>
+                        <p>${wine.description}</p>
+                        <p>Price: ${wine.price} ${wine.currency}</p>
+                        <p>Alcohol: ${wine.alcohol}%</p>
+                        <p>Country: ${wine.country}</p>
+                        <a href="${wine.url}" target="_blank">More Info</a>
+                    `;
+                    list.appendChild(item);
+                });
+                container.appendChild(list);
+            } else {
+                container.innerHTML = '<p>No recommendations found.</p>';
+            }
+        }
+    </script>
 </body>
 </html>
